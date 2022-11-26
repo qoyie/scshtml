@@ -51,4 +51,19 @@ console.log(scshtml2html(`
     .template{"something"}
   `;
 })); // => <div class="template">something</div>
+
+console.log(scshtml2html(`
+  @import /template.scshtml;
+  @include template{
+    a[href="https://www.github.com"]{"GitHub"}
+  }
+`, filename => {
+  return `
+    @mixin template{
+      .box{
+        @content;
+      }
+    }
+  `;
+})); // => <div class="box"><a href="https://www.github.com">GitHub</a></div>
 ```
