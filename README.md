@@ -10,9 +10,9 @@ console.log(scshtml2html(`
 `)) // => <h1 class="big">Hello</h1>
 
 console.log(scshtml2html(`
-{
-  a[href="https://stackoverflow.com/"class="anchor anchor-external"]{"External link"}
-}
+  {
+    a[href="https://stackoverflow.com/"class="anchor anchor-external"]{"External link"}
+  }
 `)); // => <div><a href="https://stackoverflow.com/" class="anchor anchor-external">External link</a></div>'
 
 console.log(scshtml2html(`
@@ -55,7 +55,7 @@ console.log(scshtml2html(`
 console.log(scshtml2html(`
   @import /template.scshtml;
   @include template{
-    a[href="https://www.github.com"]{"GitHub"}
+    a[href=https://www.github.com/]{"GitHub"}
   }
 `, filename => {
   return `
@@ -65,5 +65,5 @@ console.log(scshtml2html(`
       }
     }
   `;
-})); // => <div class="box"><a href="https://www.github.com">GitHub</a></div>
+})); // => <div class="box"><a href="https://www.github.com/">GitHub</a></div>
 ```
