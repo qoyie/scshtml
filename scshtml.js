@@ -106,6 +106,7 @@ function handle(src, append, command) {
         break;
       case '"': {
         let buf = '';
+        let s;
         while (i < src.length) {
           s = src[++i];
           if (s === '\\') {
@@ -151,6 +152,7 @@ function handle(src, append, command) {
         break;
       case "'": {
         let buf = '';
+        let s;
         while (i < src.length) {
           s = src[++i];
           if (s === '\\') {
@@ -250,8 +252,8 @@ function handle(src, append, command) {
         attr = null;
         break;
       case '@': {
-        let buf = '',
-            s;
+        let buf = '';
+        let s;
         for (s = src[++i]; i < src.length && s !== ';' && s !== '{'; s = src[++i]) {
           buf += s;
         }
