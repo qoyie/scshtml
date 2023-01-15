@@ -105,6 +105,13 @@ function handle(src, append, command) {
       }
         break;
       case '"': {
+        if (tagname || attr) {
+          append(`<${tagname||'div'}${attr===null?'':
+                 Object.entries(attr).map(([k,v])=>' '+k+(v?'="'+v+'"':'')).join('')}>`);
+          if (!empty_tags.has(tagname)) {
+            append(`</${tagname||'div'}>`);
+          }
+        }
         let buf = '';
         let s;
         while (i < src.length) {
@@ -151,6 +158,13 @@ function handle(src, append, command) {
       }
         break;
       case "'": {
+        if (tagname || attr) {
+          append(`<${tagname||'div'}${attr===null?'':
+                 Object.entries(attr).map(([k,v])=>' '+k+(v?'="'+v+'"':'')).join('')}>`);
+          if (!empty_tags.has(tagname)) {
+            append(`</${tagname||'div'}>`);
+          }
+        }
         let buf = '';
         let s;
         while (i < src.length) {
@@ -202,33 +216,33 @@ function handle(src, append, command) {
         tagname = '';
         attr = null;
         break;
-      case '}':
+      case '}': {
         if (tagname || attr) {
           append(`<${tagname||'div'}${attr===null?'':
                  Object.entries(attr).map(([k,v])=>' '+k+(v?'="'+v+'"':'')).join('')}>`);
           if (!empty_tags.has(tagname)) {
             append(`</${tagname||'div'}>`);
           }
-        } {
-          let j = 0;
-          for (let s = src[i + 1]; i < src.length && '0' <= s && s <= '9'; s = src[++i + 1]) {
-            j *= 10;
-            j += +s;
-          }
-          if (stack.length < ++j) {
-            while (stack.length) {
-              append(`</${stack.pop()[0]}>`);
-            }
-            return;
-          }
-          for (; j; j--) {
+        }
+        let j = 0;
+        for (let s = src[i + 1]; i < src.length && '0' <= s && s <= '9'; s = src[++i + 1]) {
+          j *= 10;
+          j += +s;
+        }
+        if (stack.length < ++j) {
+          while (stack.length) {
             append(`</${stack.pop()[0]}>`);
           }
+          return;
+        }
+        for (; j; j--) {
+          append(`</${stack.pop()[0]}>`);
         }
         parent_attr = stack.length ? stack.at(-1)[1] : ['class', ''];
         tagname = '';
         attr = null;
         break;
+      }
       case ';':
         parent_attr = stack.length ? stack.at(-1)[1] : ['class', ''];
         append(`<${tagname||'div'}${attr===null?'':
@@ -260,7 +274,7 @@ function handle(src, append, command) {
         const arr = buf.split(' ');
         switch (arr[0]) {
           case 'import':
-            handle(command['import'](arr.slice(1)), append, {
+            handle(command['import'](arr[1]), append, {
               ...command,
               _: {
                 mixins
