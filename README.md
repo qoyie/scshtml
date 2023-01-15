@@ -21,18 +21,18 @@ $ gh repo clone qoyie/scshtml
 
 In Node.js:
 ```js
-export scshtml2html from './scshtml.js';
-//or const scshtml2html = require('./scshtml.js');
+export scshtml_compile from './scshtml.js';
+//or const scshtml_compile = require('./scshtml.js');
 ```
 
 ## Examples
 
 ```js
-console.log(scshtml2html(`
+console.log(scshtml_compile(`
   h1.big.hello{"Hello"}
 `)) // => <h1 class="big hello">Hello</h1>
 
-console.log(scshtml2html(`
+console.log(scshtml_compile(`
   {
     a[href="https://stackoverflow.com/"class="anchor anchor-external"]{"External link"}
   }
@@ -44,14 +44,14 @@ console.log(scshtml2html(`
 </div>
 */
 
-console.log(scshtml2html(`
+console.log(scshtml_compile(`
   #div1;
   #div2;
 `)); /* => (beautified)
 <div id="div1"></div>
 <div id="div2"></div>
 */
-console.log(scshtml2html(`
+console.log(scshtml_compile(`
   .block{
     &__elm{
       a[href=https://example.com/ onclick="return false"]{"example"}
@@ -76,7 +76,8 @@ console.log(scshtml2html(`
   </div>
 </div>
 */
-console.log(scshtml2html(`
+
+console.log(scshtml_compile(`
   @mixin box{
     .box{
       "box"
@@ -95,7 +96,7 @@ console.log(scshtml2html(`
 </div>
 */
 
-console.log(scshtml2html(`
+console.log(scshtml_compile(`
   @import /template.scshtml;
 `, {
   import: filename => {
@@ -110,7 +111,7 @@ console.log(scshtml2html(`
 </div>
 */
 
-console.log(scshtml2html(`
+console.log(scshtml_compile(`
   @import /template.scshtml;
   @include template{
     a[href=https://www.github.com/]{"GitHub"}
@@ -133,7 +134,7 @@ console.log(scshtml2html(`
 </div>
 */
 
-console.log(scshtml2html(`
+console.log(scshtml_compile(`
   a[:https://www.example.com/]{"Domain for example."}
   input#id[/radio $name #value]
   label[%id]{"label"}
@@ -149,7 +150,7 @@ console.log(scshtml2html(`
 <img src="https://avatars.githubusercontent.com/u/97143783?s=96&v=4" width="100" height="50">
 */
 
-console.log(scshtml2html(`
+console.log(scshtml_compile(`
 (switch(1){)
   (case 0:)
     "0"
