@@ -19,10 +19,15 @@ Using Github CLI:
 $ gh repo clone qoyie/scshtml
 ```
 
+For ES6Module
+```
+$ echo export default scshtml_compile >> scshtml.js
+```
+
 In Node.js:
 ```js
-export scshtml_compile from './scshtml.js';
-//or const scshtml_compile = require('./scshtml.js');
+const scshtml_compile = require('./scshtml.js');
+//or import scshtml_compile from './scshtml.js';
 ```
 
 ## Examples
@@ -151,19 +156,19 @@ console.log(scshtml_compile(`
 */
 
 console.log(scshtml_compile(`
-(switch(1){)
-  (case 0:)
+@{ switch(1){ @}
+  @{ case 0: @}
     "0"
-    (break;)
-  (case 1:)
+    @{ break; @}
+  @{ case 1: @}
     "1"
-    (break;)
-  (case 2:)
+    @{ break; @}
+  @{ case 2: @}
     "2"
-    (break;)
-(})
+    @{ break; @}
+@{ } @}
 @for i from 0 through 3{
-  a[:#(=i)]{"(=i)"}
+  a[:#(=i)]{"${i}"}
 }
 @if typeof(window)!=='undefined'{
   "Running on browser."
@@ -173,7 +178,7 @@ console.log(scshtml_compile(`
   "Running on something else."
 }
 @while false{
-  (throw new Error;)
+  @{ throw new Error; @}
 }
 `)); /* => (beautified)
 1
