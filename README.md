@@ -63,7 +63,7 @@ console.log(scshtml_compile(`
     }
     &__elm<&--red>{
       input[type=checkbox disabled*]
-      "traling semicolon is unnecessary if the element is empty element"
+      "traling semicolon is unnecessary if the element is void element"
       br
     }
   }
@@ -76,7 +76,7 @@ console.log(scshtml_compile(`
   </div>
   <div class="block__elm block__elm--red">
     <input type="checkbox" disabled="disabled">
-    trailing semicolon is unnecessary if the element empty element
+    trailing semicolon is unnecessary if the element is void element
     <br>
   </div>
 </div>
@@ -182,10 +182,18 @@ console.log(scshtml_compile(`
 }
 `)); /* => (beautified)
 1
-<a href="#0">0</a>
-<a href="#1">1</a>
-<a href="#2">2</a>
-<a href="#3">3</a>
+<a href="#0">
+  0
+</a>
+<a href="#1">
+  1
+</a>
+<a href="#2">
+  2
+</a>
+<a href="#3">
+  3
+</a>
 Running on {depends on environment}.
 */
 ```
